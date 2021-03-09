@@ -4,6 +4,7 @@ import React from 'react';
 import { Route } from 'react-router';
 import Kitchen from '../kitchen';
 import { Link } from 'react-router-dom';
+import Restaurant from '../restaurant';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -26,7 +27,7 @@ function Dashboard() {
           <Link to={'/dashboard/kitchen'}>Kitchen</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-        <Link to={'/dashboard/restaurant'}>Restaurant</Link>
+          <Link to={'/dashboard/restaurant'}>Restaurant</Link>
         </Menu.Item>
         <Menu.Item key="3" icon={<UploadOutlined />}>
           nav 3
@@ -41,6 +42,7 @@ function Dashboard() {
       <Content style={{ margin: '24px 16px 0', height: '100vh' }}>
         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
             <Route exact path={'/dashboard/kitchen'} component={Kitchen}/>
+            <Route exact path={'/dashboard/restaurant'} component={Restaurant}/>
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

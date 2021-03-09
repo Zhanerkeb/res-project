@@ -32,6 +32,12 @@ function Kitchen(props) {
     },
     ];
 
+    // const uploadImage = async options => {
+    //     const {  file } = options;
+    //     setFile(file)
+    //     setNewRest({...newRest, image: file})
+    //   };
+
     const handleDelete = id => {
        props.kitchenActions.deleteKitchen(id);
     }
