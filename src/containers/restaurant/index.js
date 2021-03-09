@@ -6,6 +6,8 @@ import * as restaurantActions from '../../actions/restaurantActions';
 
 function Restaurant(props) {
     const [query, setQuery] = useState('')
+    const [page, setPage] = useState(1)
+    console.log(props.total);
     const columns = [
         {
             title: 'ID',
@@ -62,12 +64,12 @@ function Restaurant(props) {
         ];
 
         useEffect(() => {
-            props.restaurantActions.getRestaurants({query: ''})
+            props.restaurantActions.getRestaurants({query: '', page: 1})
         }, [])
 
         const handleSearch = e => {
             setQuery(e.target.value)
-            props.restaurantActions.getRestaurants({query: e.target.value})
+            props.restaurantActions.getRestaurants({query: e.target.value, page: page})
         }
     
         const data = props.restaurants.map((item) => {
@@ -82,17 +84,21 @@ function Restaurant(props) {
                 amountOfPlace: item.amountOfPlace
             }
         })
+    const handlePageChange = e => {
+        props.restaurantActions.getRestaurants({query: query, page: e})
+    }
 
     return(
         <div> 
             <Input type="search" onKeyUp={handleSearch}/>
-            <Table columns={columns} dataSource={data} /></div>
+            <Table columns={columns} dataSource={data} pagination={{total: props.total, pageSize: 6, onChange: handlePageChange}}/></div>
     )
 }
 
 const mapStateToProps = state => ({
     isLoading: state.restaurant.isLoading,
-    restaurants: state.restaurant.restaurants
+    restaurants: state.restaurant.restaurants,
+    total: state.restaurant.total
   })
   
   const mapDispatchToProps = dispatch => ({
