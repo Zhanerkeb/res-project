@@ -7,7 +7,6 @@ import * as restaurantActions from '../../actions/restaurantActions';
 function Restaurant(props) {
     const [query, setQuery] = useState('')
     const [page, setPage] = useState(1)
-    console.log(props.total);
     const columns = [
         {
             title: 'ID',
@@ -24,7 +23,7 @@ function Restaurant(props) {
             dataIndex: 'image',
             key: 'image',
             render: image => <img style={{width: '40px', height: '40px'}} src={`http://37.18.30.124:9000/${image}`}/>
-            },
+        },
         {
             title: 'Location',
             dataIndex: 'location',
@@ -63,27 +62,27 @@ function Restaurant(props) {
         },
         ];
 
-        useEffect(() => {
-            props.restaurantActions.getRestaurants({query: '', page: 1})
-        }, [])
+    useEffect(() => {
+        props.restaurantActions.getRestaurants({query: '', page: 1})
+    }, [])
 
-        const handleSearch = e => {
-            setQuery(e.target.value)
-            props.restaurantActions.getRestaurants({query: e.target.value, page: page})
+    const handleSearch = e => {
+        setQuery(e.target.value)
+        props.restaurantActions.getRestaurants({query: e.target.value, page: page})
+    }
+
+    const data = props.restaurants.map((item) => {
+        return {
+            id: item.id,
+            name: item.name,
+            image: item.image,
+            location: item.location,
+            averageBill: item.averageBill,
+            rate: item.rate,
+            phone: item.phone,
+            amountOfPlace: item.amountOfPlace
         }
-    
-        const data = props.restaurants.map((item) => {
-            return {
-                id: item.id,
-                name: item.name,
-                image: item.image,
-                location: item.location,
-                averageBill: item.averageBill,
-                rate: item.rate,
-                phone: item.phone,
-                amountOfPlace: item.amountOfPlace
-            }
-        })
+    })
     const handlePageChange = e => {
         props.restaurantActions.getRestaurants({query: query, page: e})
     }
@@ -95,7 +94,7 @@ function Restaurant(props) {
     )
 }
 
-const mapStateToProps = state => ({
+  const mapStateToProps = state => ({
     isLoading: state.restaurant.isLoading,
     restaurants: state.restaurant.restaurants,
     total: state.restaurant.total
